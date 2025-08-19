@@ -1,0 +1,24 @@
+services:
+
+  redis-cache:
+    image: docker.io/redis:alpine
+    platform: linux/amd64
+    
+  redis-queue:
+    image: docker.io/redis:alpine
+    platform: linux/amd64
+    
+  frappe:
+    image: docker.io/frappe/bench:latest
+    platform: linux/amd64
+    command: sleep infinity
+    environment:
+      - SHELL=/bin/bash
+    working_dir: /workspace/development
+    volumes:
+      - ..:/workspace:cached
+      - ${HOME}/.ssh:/home/frappe/.ssh
+    ports:
+      - 8080:8000
+      - 9090:9000
+
